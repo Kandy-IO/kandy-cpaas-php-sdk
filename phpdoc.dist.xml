@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpdoc>
+  <parser>
+    <target>docs</target>
+  </parser>
+  <transformer>
+    <target>docs</target>
+  </transformer>
+  <files>
+    <directory>src</directory>
+    <ignore>src/Resources/NotificationChannel.php</ignore>
+    <ignore>src/Helper.php</ignore>
+    <ignore>src/Client.php</ignore>
+  </files>
+</phpdoc>

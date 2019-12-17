@@ -1,0 +1,6 @@
+composer.lock
+vendor
+phpdoc-cache-*
+.DS_Store
+
+
