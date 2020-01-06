@@ -8,7 +8,7 @@ require '../src/Resources/Twofactor.php';
 
 use PHPUnit\Framework\TestCase;
 
-use cpaassdk\ClientConfig;
+use cpaassdk\Api;
 use cpaassdk\Twofactor;
 use cpaassdk\MockCustomClient;
 
@@ -27,7 +27,7 @@ class TwofactorTest extends TestCase {
   public function setup() {
     $mock = new MockCustomClient();
     $mock_client = $mock->getGuzzleMockClient();
-    $this->client = new ClientConfig($client_id, $client_secret, $mock_client);
+    $this->client = new Api($client_id, $client_secret, $mock_client);
     $this->twofactor = new Twofactor($this->client);
   }
 

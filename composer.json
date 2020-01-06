@@ -1,4 +1,13 @@
 {
+    "name": "cpaassdk/cpaassdk",
+    "description": "PHP SDK to build robust real-time communication applications.",
+    "authors": [
+        {
+            "name": "KeepWorks",
+            "email": "kandy@keepworks.com"
+        }
+    ],
+    "license": "SEE LICENSE IN LICENSE.md",
     "require": {
         "firebase/php-jwt": "^5.0",
         "guzzlehttp/guzzle": "^6.4"

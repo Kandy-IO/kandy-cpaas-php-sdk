@@ -12,7 +12,7 @@ use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 
 use cpaassdk\MockCustomClient;
-use cpaassdk\ClientConfig;
+use cpaassdk\Api;
 
 
 class ClientTest extends TestCase {
@@ -22,7 +22,7 @@ class ClientTest extends TestCase {
   public function setUp() {
     $mock = new MockCustomClient();
     $mock_client = $mock->getGuzzleMockClient();
-    $this->client = new ClientConfig($client_id, $client_secret, $base_url, $mock_client);
+    $this->client = new Api($client_id, $client_secret, $base_url, $mock_client);
   }
 
   public function testClientCredentials() {

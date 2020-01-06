@@ -4,7 +4,7 @@ namespace cpaassdk;
 
 require 'NotificationChannel.php';
 
-use cpaassdk\ClientConfig;
+use cpaassdk\Api;
 use cpaassdk\NotificationChannel;
 
 /**
@@ -34,7 +34,7 @@ class Conversation {
    * @ignore
    */
 
-  public function __construct(ClientConfig $client) {
+  public function __construct(Api $client) {
     $this->client = $client;
   }
 
@@ -71,9 +71,9 @@ class Conversation {
       $options['body']['outboundSMSMessageRequest']['outboundSMSTextMessage']['message'] = $message;
       
       $uri = $sender_address."/requests";
-      $uri = $this->client->routes('conversation.create_message', $uri);
+      $uri = "/cpaas/smsmessaging/v1/".$this->client->user_id."/outbound/".$uri;
       $url = $this->client->_root.$uri;
-      $response = $this->client->_request('POST', $url, $options['body']);
+      $response = $this->client->_request('POST', $url, $options);
       
       // TODO: refactor and move common section to a helper class.
       // check if test response
@@ -87,6 +87,7 @@ class Conversation {
       }
 
       $response = $response->getBody();
+      $response = json_decode($response, TRUE);
       $custom_response = array();
       $custom_response['message'] = $response['outboundSMSMessageRequest']['outboundSMSTextMessage']['message'];
       $custom_response['sender_address'] = $response['outboundSMSMessageRequest']['senderAddress'];
@@ -133,11 +134,10 @@ class Conversation {
       if ($local_address) {
         $uri = "/".$uri."/localAddresses/".$local_address;
       }
-      $uri = $this->client->routes('conversation.get_messages', $uri);
+      $uri = "/cpaas/smsmessaging/v1/".$this->client->user_id.$uri;
       $url = $this->client->_root.$uri;
-      $response = $this->client->_request('GET', $url, $options['query']);
+      $response = $this->client->_request('GET', $url, $options);
       
-      // TODO: refactor and move common section to a helper class.
       // check if test response
       if ($this->client->check_if_test($response)) {
         return $response;
@@ -174,11 +174,10 @@ class Conversation {
 
     if ($message_type == $this->msg_type['SMS']) {
       $uri = '/remoteAddresses/'.$remote_address.'/localAddresses/'.$local_address.'/messages/'.$message_id.'/status';
-      $uri = $this->client->routes('conversation.get_status', $uri);
+      $uri = "/cpaas/smsmessaging/v1/".$this->client->user_id.$uri;
       $url = $this->client->_root.$uri;
       $response = $this->client->_request('GET', $url);
       
-      // TODO: refactor and move common section to a helper class.
       // check if test response
       if ($this->client->check_if_test($response)) {
         return $response;
@@ -219,11 +218,10 @@ class Conversation {
     if ($message_type == $this->msg_type['SMS']) {
       $options = ['query' => $query];
       $uri = '/remoteAddresses/'.$remote_address.'/localAddresses/'.$local_address.'/messages';
-      $uri = $this->client->routes('conversation.get_messages_in_thread', $uri);
+      $uri = "/cpaas/smsmessaging/v1/".$this->client->user_id.$uri;
       $url = $this->client->_root.$uri;
-      $response = $this->client->_request('GET', $url, $options['query']);
+      $response = $this->client->_request('GET', $url, $options);
       
-      // TODO: refactor and move common section to a helper class.
       // check if test response
       if ($this->client->check_if_test($response)) {
         return $response;
@@ -260,11 +258,10 @@ class Conversation {
 
     if ($message_type == $this->msg_type['SMS']) {
       $uri = '/remoteAddresses/'.$remote_address.'/localAddresses/'.$local_address.'/messages/'.$message_id;
-      $uri = $this->client->routes('conversation.delete_message', $uri);
+      $uri = "/cpaas/smsmessaging/v1/".$this->client->user_id.$uri;
       $url = $this->client->_root.$uri;
       $response = $this->client->_request('DELETE', $url);
       
-      // TODO: refactor and move common section to a helper class.
       // check if test response
       if ($this->client->check_if_test($response)) {
         return $response;
@@ -294,11 +291,10 @@ class Conversation {
     $message_type = $params['type'];
 
     if ($message_type == $this->msg_type['SMS']) {
-      $uri = $this->client->routes('conversation.get_subscriptions');
+      $uri = "/cpaas/smsmessaging/v1/".$this->client->user_id."/inbound/subscriptions";
       $url = $this->client->_root.$uri;
       $response = $this->client->_request('GET', $url);
       
-      // TODO: refactor and move common section to a helper class.
       // check if test response
       if ($this->client->check_if_test($response)) {
         return $response;
@@ -310,6 +306,7 @@ class Conversation {
       }
       
       $response = $response->getBody();
+      $response = json_decode($response, TRUE);
       // check the response if an array object.
       $custom_response = array();
       if (array_key_exists('subscriptionList', $response) && array_key_exists('subscription', $response['subscriptionList'])) {
@@ -344,11 +341,10 @@ class Conversation {
 
     if ($message_type == $this->msg_type['SMS']) {
       $uri = $subscription_id;
-      $uri = $this->client->routes('conversation.get_subscription', $uri);
+      $uri = "/cpaas/smsmessaging/v1/".$this->client->user_id."/inbound/subscriptions/".$uri;
       $url = $this->client->_root.$uri;
       $response = $this->client->_request('GET', $url);
       
-      // TODO: refactor and move common section to a helper class.
       // check if test response
       if ($this->client->check_if_test($response)) {
         return $response;
@@ -360,6 +356,7 @@ class Conversation {
       }
 
       $response = $response->getBody();
+      $response = json_decode($response, TRUE);
       // check the response if an array object.
       
       if (array_key_exists('subscription', $response)) {
@@ -393,21 +390,18 @@ class Conversation {
 
     if ($message_type == $this->msg_type['SMS']) {
       # create a notifyURL with webhookURL
-      $this->notificaton_channel = new NotificationChannel($this->client);
-      $channel = $this->notificaton_channel->create_channel($params);
-      $channel = json_decode($channel->getBody(), TRUE);
-
+      $notificaton_channel = new NotificationChannel($this->client);
+      $channel = $notificaton_channel->create_channel($params);
       $options = array('body' => array());
       $options['body']['subscription'] = array();
       $options['body']['subscription']['callbackReference'] = ['notifyURL' => $channel['channel_id']];
       $options['body']['subscription']['clientCorrelator'] = $this->client->client_correlator;
       $options['body']['subscription']['destinationAddress'] = $destination_address;
-
-      $uri = $this->client->routes('conversation.subscribe', $uri);
-      $url = $this->client->_root.$uri;
-      $response = $this->client->_request("POST", $url, $options['body']);
       
-      // TODO: refactor and move common section to a helper class.
+      $uri = "/cpaas/smsmessaging/v1/".$this->client->user_id."/inbound/subscriptions";
+      $url = $this->client->_root.$uri;
+      $response = $this->client->_request("POST", $url, $options);
+      
       // check if test response
       if ($this->client->check_if_test($response)) {
         return $response;
@@ -419,6 +413,7 @@ class Conversation {
       }
 
       $response = $response->getBody();
+      $response = json_decode($response, TRUE);
       $custom_response = array();
       $custom_response['webhook_url'] = $params['webhook_url'];
       $custom_response['destination_address'] = $response['subscription']['destinationAddress'];
@@ -445,12 +440,10 @@ class Conversation {
     $subscription_id = $params['subscription_id'];
 
     if ($message_type == $this->msg_type['SMS']) {
-      $uri = $subscription_id;
-      $uri = $this->client->routes('conversation.unsubscribe', $uri);
+      $uri = "/cpaas/smsmessaging/v1/".$this->client->user_id."/inbound/subscriptions/".$subscription_id;
       $url = $this->client->_root.$uri;
       $response = $this->client->_request('DELETE', $url);
       
-      // TODO: refactor and move common section to a helper class.
       // check if test response
       if ($this->client->check_if_test($response)) {
         return $response;
@@ -462,6 +455,7 @@ class Conversation {
       }
 
       $response = $response->getBody();
+      $response = json_decode($response, TRUE);
       $custom_response = array();
       $custom_response['subscription_id'] = $subscription_id;
       $custom_response['success'] = true;
@@ -470,6 +464,4 @@ class Conversation {
     }
   }
 }
-
 ?>
-

@@ -8,7 +8,7 @@ require '../src/Resources/Conversation.php';
 
 use PHPUnit\Framework\TestCase;
 
-use cpaassdk\ClientConfig;
+use cpaassdk\Api;
 use cpaassdk\Conversation;
 use cpaassdk\NotificationChannel;
 use cpaassdk\MockCustomClient;
@@ -26,7 +26,7 @@ class ConversationTest extends TestCase {
   public function setup() {
     $mock = new MockCustomClient();
     $mock_client = $mock->getGuzzleMockClient();
-    $this->client = new ClientConfig($client_id, $client_secret, $mock_client);
+    $this->client = new Api($client_id, $client_secret, $mock_client);
     $this->conversation = new Conversation($this->client);
   }
 

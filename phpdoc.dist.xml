@@ -10,6 +10,6 @@
     <directory>src</directory>
     <ignore>src/Resources/NotificationChannel.php</ignore>
     <ignore>src/Helper.php</ignore>
-    <ignore>src/Client.php</ignore>
+    <ignore>src/Api.php</ignore>
   </files>
 </phpdoc>

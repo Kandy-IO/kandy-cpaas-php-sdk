@@ -40,9 +40,12 @@ class Helper {
   public function check_if_test($response) {
     $resp = $response->getBody();
     $resp = json_decode($resp, TRUE);
-    var_dump($resp);
-    if (array_key_exists('test_request', $resp)) {
-      return true;
+    if (is_array($resp)) {
+      if (array_key_exists('test_request', $resp)) {
+        return true;
+      } else {
+        return false;
+      }
     } else {
       return false;
     }
