@@ -85,6 +85,7 @@ $params = [
   'message'=>'Your verification code {code}',
   'destination_address'=>'johndev@someemail.com',
   'method'=>'email',
+  'subject'=>'2FA verification code.'
   'expiry'=>3600,
   'length'=>6,
   'type'=>'alphanumeric'

@@ -10,15 +10,15 @@ and then execute the below command in your projects root directory.
 
 
 ```php
-composer require cpaassdk
+composer require cpaassdk/cpaassdk
 ```
 
 
-In your application, you need to import cpaassdk `use cpaassdk/CpaasSdk;`
+In your application, you need to import cpaassdk `use cpaassdk/Client;`
 
 ```php
 # Call the configure method with the required creds.
-$client = new CpaasSdk('client_id', 'client_secret', 'base_url');
+$client = new Client('client_id', 'client_secret', 'base_url');
 ```
 
 After you've configured the SDK client, you can begin playing around with it to learn its functionality and see how it fits in your application. The API reference documentation will help to explain the details of the available features.
@@ -26,7 +26,7 @@ After you've configured the SDK client, you can begin playing around with it to 
 ## Configuration
 
 ```php
-$client = new CpaasSdk('client_id', 'client_secret', 'base_url');
+$client = new Client('client_id', 'client_secret', 'base_url');
 ```
 
 The information required to be authenticated should be under:

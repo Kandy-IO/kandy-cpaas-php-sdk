@@ -1,0 +1,164 @@
+<?php
+
+namespace cpaassdk;
+
+require '../vendor/autoload.php';
+require 'Helper.php';
+
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Psr7\Request;
+use \Datetime;
+
+use cpaassdk\Helper;
+
+class Api extends Helper {
+
+  public $_root = null;
+	public $_version = '1.0.0';
+  // api config section.
+  public $client_id = null;
+  public $client_secret = null;
+  public $user_id = null;
+	public $access_token = null;
+	public $id_token = null;
+	public $access_token_parsed = null;
+  public $id_token_parsed = true;
+  public $client_correlator = null;
+  public $client = null;
+
+  public function __construct($client_id, $client_secret, $base_url, $client=null) {
+    $this->_root = $base_url;
+		$this->client_id = $client_id;
+    $this->client_secret = $client_secret;
+    $this->client_correlator = $client_id.'-php';
+    if (!$client) {
+      $this->client = new Client();
+    } else {
+      $this->client = $client;
+    }
+    $this->auth_token();
+  }
+
+  public function _request($verb, $url, $params=null, $headers=null) {
+    $postData = '';
+
+    if ($headers['Content-Type'] == 'application/x-www-form-urlencoded') {
+      foreach($params as $k => $v) { 
+        $postData .= $k . '='.$v.'&';
+      }
+      $postData = rtrim($postData, '&');
+    } else {
+      $postData = json_encode($params);
+    }
+    $request_headers = $this->compose_headers($headers);
+
+    // guzzle section.
+    
+    switch($verb) {
+      case 'GET':
+        if ($params) {
+          $response = $this->client->get($url, ['query' => $params, 'headers' => $request_headers, 'http_errors' => false]);
+        } else {
+          $response = $this->client->get($url, ['headers' => $request_headers, 'http_errors' => false]);
+        }
+      break;
+      case 'POST':
+        if (!$this->access_token) {
+          $response = $this->client->post($url, ['form_params'=> $params, 'headers' => $request_headers, 'http_errors' => false]);
+        } else {
+          $response = $this->client->post($url, ['body'=> $postData, 'headers' => $request_headers, 'http_errors' => false]);
+        }
+      break;
+      case 'PUT':
+        if (!$this->access_token) {
+          $response = $this->client->put($url, ['form_params'=> $params, 'headers' => $request_headers, 'http_errors' => false]);
+        } else {
+          $response = $this->client->put($url, ['body'=> $postData, 'headers' => $request_headers, 'http_errors' => false]);
+        }
+      break;
+      case 'DELETE':
+        $response = $this->client->delete($url, ['headers' => $request_headers, 'http_errors' => false]);
+    }
+
+    return $response;
+  }
+
+  public function auth_token() {
+    if($this->token_expired()){
+      $tokens = $this->tokens();
+      $this->set_token($tokens);
+    }
+    return $this->access_token;
+  }
+
+  public function tokens() {
+    $options = array('body'=> array(), 'headers'=> array());
+    $options['body']['grant_type'] = 'client_credentials';
+    $options['body']['client_id'] = $this->client_id;
+    $options['body']['client_secret'] = $this->client_secret;
+    $options['body']['scope'] = 'openid';
+    
+    $options['headers']['Content-Type'] = 'application/x-www-form-urlencoded';
+    $params['options'] = $options;
+
+    $uri = "/cpaas/auth/v1/token";
+    $url = $this->_root.$uri;
+    $response = $this->_request("POST", $url, $options['body'], $options['headers']);
+    // TODO: need to handle error response and test response.
+    
+    $tokens = $response->getBody();
+    return $tokens;
+  }
+
+  public function set_token($tokens=null) {
+    if ($tokens) {
+      $tokens = json_decode($tokens, TRUE);
+      $this->access_token = $tokens['access_token'];
+      $this->id_token = $tokens['id_token'];
+      list($header, $access_payload, $signature) = explode (".", $this->access_token);
+      $parsed_access_token = json_decode(base64_decode($access_payload), TRUE);
+      list($header, $id_payload, $signature) = explode (".", $this->id_token);
+      $parsed_id_token = json_decode(base64_decode($id_payload), TRUE);
+      $user_id = $parsed_id_token['preferred_username'];
+      $this->access_token_parsed = $parsed_access_token;
+      $this->id_token_parsed = $parsed_id_token;
+      $this->user_id=$user_id;
+    } else {
+      $this->access_token = null;
+      $this->id_token = null;
+      $this->user_id = null;
+      $this->access_token_parsed = null;
+      $this->id_token_parsed = null;
+    }
+  }
+
+  public function compose_headers($headers=null) {
+    $base_header = [
+      'Content-Type'=>'application/json',
+      'X-Cpaas-Agent'=>'php-sdk/'.$this->_version
+    ];
+    if ($headers) {
+      foreach($headers as $k => $v) {
+        $base_header[$k] = $v; 
+      }
+    }
+    if ($this->access_token) {
+      $base_header['Authorization'] =  'Bearer '.$this->access_token;
+    }   
+    return $base_header;
+  }
+
+  public function token_expired() {
+    if (!$this->access_token) {
+      return true;
+    }
+
+    $min_buffer = $this->access_token_parsed['exp'] - $this->access_token_parsed['iat'];
+    $expires_in = $this->access_token_parsed['exp'] - int($date->getTimestamp()) - $min_buffer;
+    return $expires_in < 0;
+  }
+
+  
+}
+?>

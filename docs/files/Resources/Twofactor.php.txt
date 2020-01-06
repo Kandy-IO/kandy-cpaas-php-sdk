@@ -3,7 +3,7 @@
 namespace cpaassdk;
 
 
-use cpaassdk\ClientConfig;
+use cpaassdk\Api;
 
 /**
 * CPaaS provides Authentication API where a two-factor authentication (2FA) flow can be implemented by using that. Sections below describe two sample use cases, two-factor authentication via SMS and two-factor authentication via e-mail.
@@ -20,7 +20,7 @@ class Twofactor {
    * @ignore
    */
 
-  public function __construct(ClientConfig $client) {
+  public function __construct(Api $client) {
     $this->client = $client;
   }
 
@@ -46,9 +46,11 @@ class Twofactor {
     $destination_address = $params['destination_address'];
     $expiry = array_key_exists('expiry', $params) ? $params['expiry'] : 120;
     $length = array_key_exists('length', $params) ? $params['length'] : 6;
+    
     if (!is_array($destination_address)) {
       $destination_address = [$destination_address];
     }
+    
     $message = $params['message'];
     $subject = $params['subject'];
     $method = array_key_exists('method', $params) ? $params['method'] : 'sms';
@@ -63,18 +65,20 @@ class Twofactor {
     $options['body']['code']['expiry'] = $expiry;
     $options['body']['code']['message'] = $message;
   
-    $uri = $this->client->routes('tf.sendcode');
+    $uri = "/cpaas/auth/v1/".$this->client->user_id."/codes";
     $url = $this->client->_root.$uri;
-    $response = $this->client->_request('POST', $url, $options['body']);
+    $response = $this->client->_request('POST', $url, $options);
     
     // TODO: refactor and move common section to a helper class.
     // check if test response
     if ($this->client->check_if_test($response)) {
+      
       return $response;
     }
     // check if error response
     if ($this->client->check_if_error($response)) {
       $response = $this->client->build_error_response($response);
+      
       return $response;
     }
 
@@ -83,6 +87,7 @@ class Twofactor {
     $code_id = $this->client->id_from_url($response['code']['resourceURL']);
     $custom_response = array();
     $custom_response['code_id'] = $code_id;
+    
     return $custom_response;
   }
 
@@ -107,26 +112,26 @@ class Twofactor {
     $options['body']['code']= ['verify'=> $verification_code];
 
     $uri = $code_id."/verify";
-    $uri = $this->client->routes('tf.verifycode', $uri);
+    $uri = "/cpaas/auth/v1/".$this->client->user_id."/codes/".$uri;
     $url = $this->client->_root.$uri;
-    $response = $this->client->_request("PUT", $url, $options['body']);
+    $response = $this->client->_request("PUT", $url, $options);
     
-    // TODO: refactor and move common section to a helper class.
     // check if test response
     if ($this->client->check_if_test($response)) {
       return $response;
     }
     // check if error response
-    if ($this->client->check_if_error($response)) {
-      $response = $this->client->build_error_response($response);
-      return $response;
-    }
+    // if ($this->client->check_if_error($response)) {
+    //   $response = $this->client->build_error_response($response);
+    //   return $response;
+    // }
 
     if ($response->getStatusCode() == 204) {
       $custom_response = ['verified'=> true, 'message'=> 'Success'];
     } else {
       $custom_response = ['verified'=> false, 'message'=> 'Code invalid or expired'];
     }
+    
     return $custom_response;
   }
 
@@ -154,9 +159,11 @@ class Twofactor {
     $code_id = $params['code_id'];
     $expiry = array_key_exists('expiry', $params) ? $params['expiry'] : 120;
     $length = array_key_exists('length', $params) ? $params['length'] : 6;
+    
     if (!is_array($destination_address)) {
       $destination_address = [$destination_address];
     }
+    
     $message = $params['message'];
     $subject = $params['subject'];
     $method = array_key_exists('method', $params) ? $params['method'] : 'sms';
@@ -171,18 +178,19 @@ class Twofactor {
     $options['body']['code']['method'] = $method;
     $options['body']['code']['format'] = array('length'=> $length, 'type'=> $type);
 
-    $uri = $this->client->routes('tf.resendcode', $code_id);
+    $uri = "/cpaas/auth/v1/".$this->client->user_id."/codes/".$code_id;
     $url = $this->client->_root.$uri;
-    $response = $this->client->_request('PUT', $url, $options['body']);
+    $response = $this->client->_request('PUT', $url, $options);
     
-    // TODO: refactor and move common section to a helper class.
     // check if test response
     if ($this->client->check_if_test($response)) {
+      
       return $response;
     }
     // check if error response
     if ($this->client->check_if_error($response)) {
       $response = $this->client->build_error_response($response);
+      
       return $response;
     }
 
@@ -191,6 +199,7 @@ class Twofactor {
     $code_id = $this->client->id_from_url($response['code']['resourceURL']);
     $custom_response = array();
     $custom_response['code_id'] = $code_id;
+    
     return $custom_response;
   }
 
@@ -207,25 +216,26 @@ class Twofactor {
 
   public function delete_code($params=null) {
     $code_id = $params['code_id'];
-    $uri = $this->client->routes('tf.deletecode', $code_id);
+    $uri = "/cpaas/auth/v1/".$this->user_id."/codes/".$code_id;
     $url = $this->client->_root.$uri;
     $response = $this->client->_request('DELETE', $url);
     
-    // TODO: refactor and move common section to a helper class.
     // check if test response
     if ($this->client->check_if_test($response)) {
-      var_dump($response);
+      
       return $response;
     }
     // check if error response
     if ($this->client->check_if_error($response)) {
       $response = $this->client->build_error_response($response);
+      
       return $response;
     }
 
     $custom_response = array();
     $custom_response['code_id'] = $code_id;
     $custom_response['success'] = true;
+    
     return $custom_response;
   }
 }
