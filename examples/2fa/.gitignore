@@ -1,0 +1,7 @@
+.idea/
+/coverage/
+/vendor/
+/logs/*
+.env
+src/
+.DS_Store
