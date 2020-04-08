@@ -78,7 +78,7 @@ An invalid/failed verification will have the following response:
 ## Two-Factor Authentication via E-mail
 A similar flow with the SMS section above can be implemented for e-mail verification.
 
-The following email code request example, requires insertion of the generated code within the link that the user is supposed to click and navigate to the application's web service:
+The following email code request example, requires an additional parameter `subject`. When value `email` is used in the `method` parameter then `subject` becomes a mandatory field to pass. The value passed becomes the subject line of the 2FA code email that is sent out to the destinationAddress:
 
 ```php
 $params = [
@@ -99,7 +99,7 @@ The response contains `code_id` which is a unique ID needed for `verify_code`. T
   }
 ```
 
-As can be seen within the example, `method` parameter has `email` value, while `destination_address` field includes a destination e-mail address. For SDK v1, only plain text is supported.
+As can be seen within the example `method` parameter has `email` value, while `destination_address` field includes a destination e-mail address. For SDK v1, only plain text is supported.
 
 Verification procedure for two-factor authentication via e-mail is same with two-factor authentication via SMS as described in previous section.
 
@@ -108,6 +108,9 @@ The `code` can be:
 
 + Resend using the same resource, which "invalidates" the previously sent code and triggers a new SMS or email containing a new code.
 + Deleted explicitly if desired (deletion operation does not block the previously started send operation)
+
+## Example
+To learn more, check the [2FA starter app](https://github.com/Kandy-IO/kandy-cpaas-php-sdk/tree/v1.0.0/examples/2fa).
 
 ## References
 For all two factor authentication related method details, refer to [Two Factor Authentication](/developer/references/php/1.0.0#twofactor-send-code).

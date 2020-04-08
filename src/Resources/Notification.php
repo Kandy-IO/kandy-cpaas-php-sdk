@@ -14,7 +14,7 @@ class Notification {
    * @ignore
    */
   public $client = null;
-  
+
   /**
    * @ignore
    */

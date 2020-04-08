@@ -8,17 +8,15 @@ To begin, you will need to make sure composer is installed and setup for your pr
 
 and then execute the below command in your projects root directory.
 
-
 ```php
 composer require cpaassdk/cpaassdk
 ```
 
-
 In your application, you need to import cpaassdk `use cpaassdk/Client;`
 
 ```php
-# Call the configure method with the required creds.
-$client = new Client('client_id', 'client_secret', 'base_url');
+# Call the configure method with the required credentials.
+$client = new Client(args);
 ```
 
 After you've configured the SDK client, you can begin playing around with it to learn its functionality and see how it fits in your application. The API reference documentation will help to explain the details of the available features.
@@ -26,7 +24,11 @@ After you've configured the SDK client, you can begin playing around with it to 
 ## Configuration
 
 ```php
-$client = new Client('client_id', 'client_secret', 'base_url');
+$client = new Client(
+  '<private project key>',
+  '<private project secret>',
+  'https://$KANDYFQDN$'
+);
 ```
 
 The information required to be authenticated should be under:
@@ -40,7 +42,7 @@ The information required to be authenticated should be under:
 
 All modules can be accessed via the client instance. All method invocations follow the namespaced signature
 
-`{client}->{modulename}->{method_name}(params)`
+`{client}->{module_name}->{method_name}(params)`
 
 Example:
 

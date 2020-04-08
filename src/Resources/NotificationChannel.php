@@ -20,11 +20,11 @@ class NotificationChannel {
 
     if ($this->client->check_if_error($response)) {
       $response = $this->client->build_error_response($response);
-      
+
       return $response;
     }
     $response = $response->getBody();
-    
+
     return $response;
   }
 
@@ -37,11 +37,11 @@ class NotificationChannel {
 
     if ($this->client->check_if_error($response)) {
       $response = $this->client->build_error_response($response);
-      
+
       return $response;
     }
     $response = $response->getBody();
-    
+
     return $response;
   }
 
@@ -51,7 +51,7 @@ class NotificationChannel {
     $options['body']['notificationChannel']['channelData'] = array('x-webhookURL' => $webhook_url);
     $options['body']['notificationChannel']['channelType'] = 'webhooks';
     $options['body']['notificationChannel']['clientCorrelator'] = $this->client->client_correlator;
-    
+
     $uri = '/cpaas/notificationchannel/v1/'.$this->client->user_id."/channels";
     $url = $this->client->_root.$uri;
     $response = $this->client->_request("POST", $url, $options);
@@ -63,7 +63,7 @@ class NotificationChannel {
     // check if error response
     if ($this->client->check_if_error($response)) {
       $response = $this->client->build_error_response($response);
-      
+
       return $response;
     }
 
@@ -71,9 +71,9 @@ class NotificationChannel {
     $response = json_decode($response, TRUE);
     $custom_response = array();
     $custom_response['channel_id'] = $response['notificationChannel']['callbackURL'];
-    $custom_response['webhook_URL'] = $response['notificationChannel']['channelData']['x-weebhookURL'];
+    $custom_response['webhook_URL'] = $response['notificationChannel']['channelData']['x-webhookURL'];
     $custom_response['channel_type'] = $response['notificationChannel']['channelType'];
-    
+
     return $custom_response;
   }
 }

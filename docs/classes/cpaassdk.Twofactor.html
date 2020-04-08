@@ -144,19 +144,19 @@
                                 <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-2024891611"></a>
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-2131189405"></a>
                                 <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
             </div>
-            <div id="namespace-2024891611" class="accordion-body collapse in">
+            <div id="namespace-2131189405" class="accordion-body collapse in">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1443994606"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1776292301"></a>
                                 <a href="../namespaces/cpaassdk.html" style="margin-left: 30px; padding-left: 0">cpaassdk</a>
             </div>
-            <div id="namespace-1443994606" class="accordion-body collapse ">
+            <div id="namespace-1776292301" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -191,7 +191,7 @@
                     <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
 
                     <h1><small>\cpaassdk</small>Twofactor</h1>
-                    <p><em>CPaaS provides Authentication API where a two-factor authentication (2FA) flow can be implemented by using that. Sections below describe two sample use cases, two-factor authentication via SMS and two-factor authentication via e-mail.</em></p>
+                    <p><em>CPaaS provides Authentication API where a two-factor authentication (2FA) flow can be implemented by using that.</em></p>
                     
                     
                                         
@@ -299,11 +299,11 @@
 <ul>
 <li><b><samp>$params['destination_address']</samp></b>        <samp>string</samp> <p>Destination address of the authentication code being sent. For sms type authentication codes, it should contain a E164 phone number.</p></li>
 <li><b><samp>$params['message']</samp></b>                    <samp>string</samp> <p>Message text sent to the destination, containing the placeholder for the code within the text. CPaaS requires to have *{code}* string within the text in order to generate a code and inject into the text. For email type code, one usage is to have the *{code}* string located within the link in order to get a unique link.</p></li>
-<li><b><samp>$params['method']</samp></b>                     <samp>string</samp> <p>Type of the authentication code delivery method, sms and email are supported types. Possible values: sms, email</p></li>
-<li><b><samp>$params['expiry']</samp></b>                     <samp>int</samp>    <p>Lifetime duration of the code sent in seconds. This can contain values between 30 and 3600 seconds.</p></li>
-<li><b><samp>$params['subject']</samp></b>                    <samp>string</samp> <p>When the method is passed as email then subject becomes a mandatory field to pass. The value passed becomes the subject line of the 2FA code email that is sent out to the destinationAddress.</p></li>
-<li><b><samp>$params['length']</samp></b>                     <samp>int</samp>    <p>Length of the authentication code tha CPaaS should generate for this request. It can contain values between 4 and 10.</p></li>
-<li><b><samp>$params['type']</samp></b>                       <samp>string</samp> <p>Type of the code that is generated. If not provided, default value is numeric. Possible values: numeric, alphanumeric, alphabetic</p></li>
+<li><b><samp>$params['method']</samp></b>                     <samp>string</samp> <i>optional</i> <p>Type of the authentication code delivery method, sms and email are supported types. Possible values: sms, email</p></li>
+<li><b><samp>$params['expiry']</samp></b>                     <samp>int</samp>    <i>optional</i> <p>Lifetime duration of the code sent in seconds. This can contain values between 30 and 3600 seconds.</p></li>
+<li><b><samp>$params['subject']</samp></b>                    <samp>string</samp> <i>optional</i> <p>When the method is passed as email then subject becomes a mandatory field to pass. The value passed becomes the subject line of the 2FA code email that is sent out to the destinationAddress.</p></li>
+<li><b><samp>$params['length']</samp></b>                     <samp>int</samp>    <i>optional</i> <p>Length of the authentication code tha CPaaS should generate for this request. It can contain values between 4 and 10.</p></li>
+<li><b><samp>$params['type']</samp></b>                       <samp>string</samp> <i>optional</i> <p>Type of the code that is generated. If not provided, default value is numeric. Possible values: numeric, alphanumeric, alphabetic</p></li>
 </ul>
 </pre></td>
                             </tr>
@@ -385,11 +385,11 @@
 <li><b><samp>$params['code_id']</samp></b>                    <samp>string</samp> <p>Id of the authentication code.</p></li>
 <li><b><samp>$params['destination_address']</samp></b>        <samp>string</samp> <p>Destination address of the authentication code being sent. For sms type authentication codes, it should contain a E164 phone number.</p></li>
 <li><b><samp>$params['message']</samp></b>                    <samp>string</samp> <p>Message text sent to the destination, containing the placeholder for the code within the text. CPaaS requires to have *{code}* string within the text in order to generate a code and inject into the text. For email type code, one usage is to have the *{code}* string located within the link in order to get a unique link.</p></li>
-<li><b><samp>$params['method']</samp></b>                     <samp>string</samp> <p>Type of the authentication code delivery method, sms and email are supported types. Possible values: sms, email</p></li>
-<li><b><samp>$params['expiry']</samp></b>                     <samp>int</samp>    <p>Lifetime duration of the code sent in seconds. This can contain values between 30 and 3600 seconds.</p></li>
-<li><b><samp>$params['subject']</samp></b>                    <samp>string</samp> <p>When the method is passed as email then subject becomes a mandatory field to pass. The value passed becomes the subject line of the 2FA code email that is sent out to the destinationAddress.</p></li>
-<li><b><samp>$params['length']</samp></b>                     <samp>int</samp>    <p>Length of the authentication code tha CPaaS should generate for this request. It can contain values between 4 and 10.</p></li>
-<li><b><samp>$params['type']</samp></b>                       <samp>string</samp> <p>Type of the code that is generated. If not provided, default value is numeric. Possible values: numeric, alphanumeric, alphabetic</p></li>
+<li><b><samp>$params['method']</samp></b>                     <samp>string</samp> <i>optional</i> <p>Type of the authentication code delivery method, sms and email are supported types. Possible values: sms, email</p></li>
+<li><b><samp>$params['expiry']</samp></b>                     <samp>int</samp>    <i>optional</i> <p>Lifetime duration of the code sent in seconds. This can contain values between 30 and 3600 seconds.</p></li>
+<li><b><samp>$params['subject']</samp></b>                    <samp>string</samp> <i>optional</i> <p>When the method is passed as email then subject becomes a mandatory field to pass. The value passed becomes the subject line of the 2FA code email that is sent out to the destinationAddress.</p></li>
+<li><b><samp>$params['length']</samp></b>                     <samp>int</samp>    <i>optional</i> <p>Length of the authentication code tha CPaaS should generate for this request. It can contain values between 4 and 10.</p></li>
+<li><b><samp>$params['type']</samp></b>                       <samp>string</samp> <i>optional</i> <p>Type of the code that is generated. If not provided, default value is numeric. Possible values: numeric, alphanumeric, alphabetic</p></li>
 </ul>
 </pre></td>
                             </tr>
@@ -499,7 +499,7 @@
                 <section class="span10 offset1">
                     <hr />
                     Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on January 5th, 2020 at 07:26.
+                    on April 7th, 2020 at 10:41.
                 </section>
             </section>
         </section>

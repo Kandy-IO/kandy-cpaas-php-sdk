@@ -144,19 +144,19 @@
                                 <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-839917809"></a>
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1655453630"></a>
                                 <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
             </div>
-            <div id="namespace-839917809" class="accordion-body collapse in">
+            <div id="namespace-1655453630" class="accordion-body collapse in">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-295709612"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-996018066"></a>
                                 <a href="../namespaces/cpaassdk.html" style="margin-left: 30px; padding-left: 0">cpaassdk</a>
             </div>
-            <div id="namespace-295709612" class="accordion-body collapse ">
+            <div id="namespace-996018066" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -303,10 +303,10 @@
 <pre>
 <ul>
 
-<li><b><samp>$params['type']</samp></b>                <samp>string</samp>   <p>Type of conversation.Possible values - SMS.Check conversation.types for more options.</p></li>
-<li><b><samp>$params['sender_address']</samp></b>      <samp>string</samp>   <p>Sender address information, basically the from address.E164 formatted DID number passed as a value, which is owned by the user. If the user wants to let CPaaS uses the default assigned DID number, this field can either has "default" value or the same value as the user_id.</p></li>
-<li><b><samp>$params['destination_address']</samp></b> <samp>string</samp>
-<li><b><samp>$params['message']</samp></b>             <samp>string</samp>
+<li><b><samp>$params['type']</samp></b>                <samp>string</samp>   <p>Type of conversation.Possible value(s) - sms. Check conversation.types for more options.</p></li>
+<li><b><samp>$params['sender_address']</samp></b>      <samp>string</samp>   <p>Sender address information, basically the from address. E164 formatted DID number passed as a value, which is owned by the user. If the user wants to let CPaaS uses the default assigned DID number, then this field should have "default" as it's value.</p></li>
+<li><b><samp>$params['destination_address']</samp></b> <samp>string</samp>   <p>Indicates which DID number(s) used as destination for this SMS.</p>
+<li><b><samp>$params['message']</samp></b>             <samp>string</samp>   <p>SMS text message.</p>
 </ul>
 </pre></td>
                             </tr>
@@ -334,7 +334,7 @@
                 <h3 class="public ">get_messages()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
                 <pre class="signature" style="margin-right: 54px;">get_messages(array  <span class="argument">$params = null</span>) </pre>
-                <p><em>Send a new outbound message</em></p>
+                <p><em>Gets all messages.</em></p>
                 
 
                                     <h4>Parameters</h4>
@@ -345,19 +345,19 @@
                                 <td><p>Single parameter to hold all options.</p>
 <pre>
 <ul>
-<li><b><samp>$params['type']</samp></b>                   <samp>string</samp> <p>Type of conversation. Possible values - SMS. Check conversation.types for more options.</p></li>
-<li><b><samp>$params['remote_address']</samp></b>         <samp>string</samp> <p>Remote address information, information while retrieving the SMS history, basically the destination telephone number that user exchanged SMS before. E164 formatted DID number passed as a value.</p></li>
-<li><b><samp>$params['local_address]</samp></b>           <samp>string</samp> <p>Local address information while retrieving the SMS history, basically the source telephone number that user exchanged SMS before.</p></li>
-<li><b><samp>$params['query']</samp></b>                  <samp>JSON</samp>   <p>To hold all query related parameter.</p></li>
-<li><b><samp>$params['query']['name']</samp></b>          <samp>string</samp> <p>Performs search operation on first_name and last_name fields.</p></li>
-<li><b><samp>$params['query']['first_name']</samp></b>    <samp>string</samp> <p>Performs search for the first_name field of the directory items.</p></li>
-<li><b><samp>$params['query']['last_name']</samp></b>     <samp>string</samp> <p>Performs search for the last_name field of the directory items.</p></li>
-<li><b><samp>$params['query']['user_name']</samp></b>     <samp>string</samp> <p>Performs search for the user_name field of the directory items.</p></li>
-<li><b><samp>$params['query']['phone_number']</samp></b>  <samp>string</samp> <p>Performs search for the fields containing a phone number, like businessPhoneNumber, homePhoneNumber, mobile, pager, fax.</p></li>
-<li><b><samp>$params['query']['order']</samp></b>         <samp>string</samp> <p>Ordering the contact results based on the requested sortBy value, order query parameter should be accompanied by sortBy query parameter.</p></li>
-<li><b><samp>$params['query']['sort_by']</samp></b>       <samp>string</samp> <p>SortBy value is used to detect sorting the contact results based on which attribute. If order is not provided with that, ascending order is used.</p></li>
-<li><b><samp>$params['query']['max']</samp></b>           <samp>int</samp>    <p>Maximum number of contact results that has been requested from CPaaS for this query.</p></li>
-<li><b><samp>$params['query']['next']</samp></b>          <samp>string</samp> <p>Pointer for the next chunk of contacts, should be gathered from the previous query results.</p></li>
+<li><b><samp>$params['type']</samp></b>                   <samp>string</samp> <p>Type of conversation. Possible value(s) - sms. Check conversation.types for more options.</p></li>
+<li><b><samp>$params['remote_address']</samp></b>         <samp>string</samp> <i>optional</i> <p>Remote address information, information while retrieving the SMS history, basically the destination telephone number that user exchanged SMS before. E164 formatted DID number passed as a value.</p></li>
+<li><b><samp>$params['local_address]</samp></b>           <samp>string</samp> <i>optional</i> <p>Local address information while retrieving the SMS history, basically the source telephone number that user exchanged SMS before.</p></li>
+<li><b><samp>$params['query']</samp></b>                  <samp>array</samp>  <i>optional</i> <p>To hold all query related parameter.</p></li>
+<li><b><samp>$params['query']['name']</samp></b>          <samp>string</samp> <i>optional</i> <p>Performs search operation on first_name and last_name fields.</p></li>
+<li><b><samp>$params['query']['first_name']</samp></b>    <samp>string</samp> <i>optional</i> <p>Performs search for the first_name field of the directory items.</p></li>
+<li><b><samp>$params['query']['last_name']</samp></b>     <samp>string</samp> <i>optional</i> <p>Performs search for the last_name field of the directory items.</p></li>
+<li><b><samp>$params['query']['user_name']</samp></b>     <samp>string</samp> <i>optional</i> <p>Performs search for the user_name field of the directory items.</p></li>
+<li><b><samp>$params['query']['phone_number']</samp></b>  <samp>string</samp> <i>optional</i> <p>Performs search for the fields containing a phone number, like businessPhoneNumber, homePhoneNumber, mobile, pager, fax.</p></li>
+<li><b><samp>$params['query']['order']</samp></b>         <samp>string</samp> <i>optional</i> <p>Ordering the contact results based on the requested sortBy value, order query parameter should be accompanied by sortBy query parameter.</p></li>
+<li><b><samp>$params['query']['sort_by']</samp></b>       <samp>string</samp> <i>optional</i> <p>SortBy value is used to detect sorting the contact results based on which attribute. If order is not provided with that, ascending order is used.</p></li>
+<li><b><samp>$params['query']['max']</samp></b>           <samp>int</samp>    <i>optional</i> <p>Maximum number of contact results that has been requested from CPaaS for this query.</p></li>
+<li><b><samp>$params['query']['next']</samp></b>          <samp>string</samp> <i>optional</i> <p>Pointer for the next chunk of contacts, should be gathered from the previous query results.</p></li>
 </ul>
 </pre></td>
                             </tr>
@@ -396,7 +396,7 @@
                                 <td><p>Single parameter to hold all options.</p>
 <pre>
 <ul>
-<li><b><samp>$params['type']</samp></b>           <samp>string</samp>   <p>Type of conversation. Possible values -  SMS. Check conversation.types for more options.</p></li>
+<li><b><samp>$params['type']</samp></b>           <samp>string</samp>   <p>Type of conversation. Possible value(s) -  sms. Check conversation.types for more options.</p></li>
 <li><b><samp>$params['remote_address']</samp></b> <samp>string</samp>   <p>Remote address information, information while retrieving the SMS history, basically the destination telephone number that user exchanged SMS before. E164 formatted DID number passed as a value.</p></li>
 <li><b><samp>$params['local_address']</samp></b>  <samp>string</samp>   <p>Local address information while retrieving the SMS history, basically the source telephone number that user exchanged SMS before.</p></li>
 <li><b><samp>$params['message_id']</samp></b>     <samp>string</samp>   <p>Identification of the SMS message.</p></li>
@@ -438,13 +438,13 @@
                                 <td><p>Single parameter to hold all options.</p>
 <pre>
 <ul>
-<li><b><samp>$params['type']</samp></b>                        <samp>string</samp> <p>Type of conversation. Possible values - SMS. Check conversation.types for more options.</p></li>
+<li><b><samp>$params['type']</samp></b>                        <samp>string</samp> <p>Type of conversation. Possible value(s) - sms. Check conversation.types for more options.</p></li>
 <li><b><samp>$params['remote_address']</samp></b>              <samp>string</samp> <p>Remote address information, information while retrieving the SMS history, basically the destination telephone number that user exchanged SMS before. E164 formatted DID number passed as a value.</p></li>
 <li><b><samp>$params['local_address']</samp></b>               <samp>string</samp> <p>Local address information while retrieving the SMS history, basically the source telephone number that user exchanged SMS before.</p></li>
-<li><b><samp>$params['query']</samp></b>                       <samp>JSON</samp>   <p>To hold all query related parameter.</p></li>
-<li><b><samp>$params['query']['max']</samp></b>                <samp>int</samp>    <p>Maximum number of contact results that has been requested from CPaaS for this query.</p></li>
-<li><b><samp>$params['query']['next']</samp></b>               <samp>string</samp> <p>Filters the messages or threads having messages that are not received by the user yet.</p></li>
-<li><b><samp>$params['query']['last_message_time']</samp></b>  <samp>string</samp> <p>Filters the messages or threads having messages that are sent/received after provided Epoch time.</p></li>
+<li><b><samp>$params['query']</samp></b>                       <samp>array</samp>  <i>optional</i><p>To hold all query related parameter.</p></li>
+<li><b><samp>$params['query']['max']</samp></b>                <samp>int</samp>    <i>optional</i><p>Maximum number of contact results that has been requested from CPaaS for this query.</p></li>
+<li><b><samp>$params['query']['next']</samp></b>               <samp>string</samp> <i>optional</i><p>Filters the messages or threads having messages that are not received by the user yet.</p></li>
+<li><b><samp>$params['query']['last_message_time']</samp></b>  <samp>string</samp> <i>optional</i><p>Filters the messages or threads having messages that are sent/received after provided Epoch time.</p></li>
 </ul>
 </pre></td>
                             </tr>
@@ -483,7 +483,7 @@
                                 <td><p>Single parameter to hold all options.</p>
 <pre>
 <ul>
-<li><b><samp>$params['type']</samp></b>           <samp>string</samp>   <p>Type of conversation. Possible values -  SMS. Check conversation.types for more options.</p></li>
+<li><b><samp>$params['type']</samp></b>           <samp>string</samp>   <p>Type of conversation. Possible value(s) -  sms. Check conversation.types for more options.</p></li>
 <li><b><samp>$params['remote_address']</samp></b> <samp>string</samp>   <p>Remote address information, information while retrieving the SMS history, basically the destination telephone number that user exchanged SMS before. E164 formatted DID number passed as a value.</p></li>
 <li><b><samp>$params['local_address']</samp></b>  <samp>string</samp>   <p>Local address information while retrieving the SMS history, basically the source telephone number that user exchanged SMS before.</p></li>
 <li><b><samp>$params['message_id']</samp></b>     <samp>string</samp>   <p>Identification of the SMS message.</p></li>
@@ -514,7 +514,7 @@
                 <h3 class="public ">get_subscriptions()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
                 <pre class="signature" style="margin-right: 54px;">get_subscriptions(array  <span class="argument">$params = null</span>) </pre>
-                <p><em>Single parameter to hold all options.</em></p>
+                <p><em>Read all active subscriptions</em></p>
                 
 
                                     <h4>Parameters</h4>
@@ -525,7 +525,7 @@
                                 <td><p>Single parameter to hold all options.</p>
 <pre>
 <ul>
-<li><b><samp>$params['type']</samp></b>           <samp>string</samp>   <p>Type of conversation. Possible values -  SMS. Check conversation.types for more options.</p></li>
+<li><b><samp>$params['type']</samp></b>           <samp>string</samp>   <p>Type of conversation. Possible value(s) - sms. Check conversation.types for more options.</p></li>
 </ul>
 </pre></td>
                             </tr>
@@ -564,7 +564,7 @@
                                 <td><p>Single parameter to hold all options.</p>
 <pre>
 <ul>
-<li><b><samp>$params['type']</samp></b>             <samp>string</samp>   <p>Type of conversation. Possible values -  SMS. Check conversation.types for more options.</p></li>
+<li><b><samp>$params['type']</samp></b>             <samp>string</samp>   <p>Type of conversation. Possible value(s) -  sms. Check conversation.types for more options.</p></li>
 <li><b><samp>$params['subscription_id']</samp></b>  <samp>string</samp>   <p>Resource ID of the subscription.</p></li>
 </ul>
 </pre></td>
@@ -604,9 +604,9 @@
                                 <td><p>Single parameter to hold all options.</p>
 <pre>
 <ul>
-<li><b><samp>$params['type']</samp></b>                 <samp>string</samp>   <p>Type of conversation. Possible values -  SMS. Check conversation.types for more options.</p></li>
-<li><b><samp>$params['webhook_url']</samp></b>          <samp>string</samp>   <p>The webhook that has been acquired during SMS API subscription, which the incoming notifications supposed to be sent to.</p></li>
-<li><b><samp>$params['destination_address']</samp></b>  <samp>string</samp>   <p>The address that incoming messages are received for this subscription. If does not exist, CPaaS uses the default assigned DID number to subscribe against. It is suggested to provide the intended E164 formatted DID number within this parameter.</p></li>
+<li><b><samp>$params['type']</samp></b>                 <samp>string</samp>   <p>Type of conversation. Possible value(s) -  sms. Check conversation.types for more options.</p></li>
+<li><b><samp>$params['webhook_url']</samp></b>          <samp>string</samp>   <p>HTTPS URL that is present in your application server which is accessible from the public web where the notifications should be sent to. Note: Should be a <code>POST</code> endpoint.</p></li>
+<li><b><samp>$params['destination_address']</samp></b>  <samp>string</samp>   <i>optional</i> <p>The address that incoming messages are received for this subscription. If does not exist, CPaaS uses the default assigned DID number to subscribe against. It is suggested to provide the intended E164 formatted DID number within this parameter.</p></li>
 </ul>
 </pre></td>
                             </tr>
@@ -645,7 +645,7 @@
                                 <td><p>Single parameter to hold all options.</p>
 <pre>
 <ul>
-<li><b><samp>$params['type']</samp></b>             <samp>string</samp>   <p>Type of conversation. Possible values -  SMS. Check conversation.types for more options.</p></li>
+<li><b><samp>$params['type']</samp></b>             <samp>string</samp>   <p>Type of conversation. Possible value(s) -  sms. Check conversation.types for more options.</p></li>
 <li><b><samp>$params['subscription_id']</samp></b>  <samp>string</samp>   <p>Resource ID of the subscription.</p></li>
 </ul>
 </pre></td>
@@ -717,7 +717,7 @@
                 <section class="span10 offset1">
                     <hr />
                     Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on January 5th, 2020 at 07:26.
+                    on April 7th, 2020 at 10:41.
                 </section>
             </section>
         </section>
