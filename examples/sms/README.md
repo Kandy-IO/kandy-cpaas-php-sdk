@@ -8,7 +8,11 @@ This is a simple sms application where a user can send an sms, subscribe sms not
 ```bash
 composer install
 ```
-3. To start the server, get into the public folder and run:
+3. Step into `public` folder
+```bash
+cd public
+```
+4. To start the server, get into the public folder and run:
 ```bash
 php -S localhost:8888
 ```

@@ -8,7 +8,11 @@ This is an elementary  login authentication use case of two-factor authenticatio
 ```bash
 composer install
 ```
-3. To start the server, get into the public folder and run:
+3. Step into `public` folder
+```bash
+cd public
+```
+4. To start the server, get into the public folder and run:
 ```bash
 php -S localhost:8888
 ```
