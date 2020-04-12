@@ -1,20 +1,30 @@
 {
-    "name": "cpaassdk/cpaassdk",
-    "description": "PHP SDK to build robust real-time communication applications.",
-    "authors": [
-        {
-            "name": "KeepWorks",
-            "email": "kandy@keepworks.com"
-        }
-    ],
-    "license": "SEE LICENSE IN LICENSE.md",
-    "require": {
-        "firebase/php-jwt": "^5.0",
-        "guzzlehttp/guzzle": "^6.4"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^7.5",
-        "theseer/phpdox": "^0.12.0",
-        "apigen/apigen": "^4.1"
+  "name": "cpaas/cpaassdk",
+  "description": "PHP SDK to build robust real-time communication applications.",
+  "authors": [
+    {
+      "name": "KeepWorks",
+      "email": "kandy@keepworks.com"
     }
+  ],
+  "license": "SEE LICENSE IN LICENSE.md",
+  "require": {
+    "firebase/php-jwt": "^5.0",
+    "guzzlehttp/guzzle": "^6.4"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^7.5",
+    "theseer/phpdox": "^0.12.0",
+    "apigen/apigen": "^4.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "CpaasSdk\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "CpaasSdkTest\\": "tests/"
+    }
+  }
 }
