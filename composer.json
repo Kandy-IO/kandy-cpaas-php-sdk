@@ -7,7 +7,7 @@
       "email": "kandy@keepworks.com"
     }
   ],
-  "license": "SEE LICENSE IN LICENSE.md",
+  "license": "proprietary",
   "require": {
     "firebase/php-jwt": "^5.0",
     "guzzlehttp/guzzle": "^6.4"
