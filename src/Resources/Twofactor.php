@@ -215,7 +215,7 @@ class Twofactor {
 
   public function delete_code($params=null) {
     $code_id = $params['code_id'];
-    $uri = "/cpaas/auth/v1/".$this->user_id."/codes/".$code_id;
+    $uri = "/cpaas/auth/v1/".$this->client->user_id."/codes/".$code_id;
     $url = $this->client->_root.$uri;
     $response = $this->client->_request('DELETE', $url);
 

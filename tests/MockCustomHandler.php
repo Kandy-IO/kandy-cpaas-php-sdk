@@ -1,6 +1,6 @@
 <?php
 
-namespace cpaassdk;
+namespace CpaasSdkTest;
 
 use Psr\Http\Message\RequestInterface;
 use GuzzleHttp\Promise;
@@ -9,7 +9,6 @@ use \Firebase\JWT\JWT;
 use \Datetime;
 
 class MockCustomHandler {
-  
   public function __invoke(RequestInterface $req, array $options) {
     $path = $req->getUri()->getPath();
     switch ($path) {
@@ -35,7 +34,7 @@ class MockCustomHandler {
     $access_token_payload = ['exp' => $date->getTimestamp()];
     $id_token_payload = ['preferred_username' => 'test-user'];
     $secret = 'test-secret';
-    
+
     $access_token = JWT::encode($access_token_payload, $secret);
     $id_token = JWT::encode($id_token_payload, $secret);
     $body = ['access_token' => $access_token, 'id_token' => $id_token];

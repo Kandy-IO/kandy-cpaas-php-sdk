@@ -35,8 +35,7 @@ class Api extends Helper {
     $this->auth_token();
   }
 
-  public function _request($verb, $url, $params=null, $with_token=true) {
-
+  public function _request($verb, $url, $params=array(), $with_token=true) {
     $headers = (array_key_exists('headers', $params)) ? $params['headers'] : null;
     $request_headers = $this->compose_headers($headers, $with_token);
 

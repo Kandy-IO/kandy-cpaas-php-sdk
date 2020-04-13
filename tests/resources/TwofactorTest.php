@@ -1,33 +1,26 @@
 <?php
 
-namespace cpaassdk;
-
-require '../src/Client.php';
-require '../tests/MockCustomClient.php';
-require '../src/Resources/Twofactor.php';
+namespace CpaasSdkTest\Resources;
 
 use PHPUnit\Framework\TestCase;
 
-use cpaassdk\Api;
-use cpaassdk\Twofactor;
-use cpaassdk\MockCustomClient;
-
-use GuzzleHttp\Client;
-use GuzzleHttp\Handler\MockHandler;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Psr7\Response;
-
+use CpaasSdk\Api;
+use CpaasSdk\Resources\Twofactor;
+use CpaasSdkTest\MockCustomClient;
 
 class TwofactorTest extends TestCase {
-  
+
   public $client = null;
   public $twofactor = null;
 
 
   public function setup() {
+    $client_id = "test-client-id";
+    $client_secret = "test-client-secret";
+    $base_url = 'https://test-server.com';
     $mock = new MockCustomClient();
     $mock_client = $mock->getGuzzleMockClient();
-    $this->client = new Api($client_id, $client_secret, $mock_client);
+    $this->client = new Api($client_id, $client_secret, $base_url, $mock_client);
     $this->twofactor = new Twofactor($this->client);
   }
 

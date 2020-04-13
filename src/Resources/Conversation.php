@@ -20,7 +20,7 @@ class Conversation {
   /**
    * @ignore
    */
-  public $notificaton_channel = null;
+  public $notification_channel = null;
 
   /**
    * @ignore
@@ -388,8 +388,8 @@ class Conversation {
 
     if ($message_type == $this->types['SMS']) {
       # create a notifyURL with webhookURL
-      $notificaton_channel = new NotificationChannel($this->client);
-      $channel = $notificaton_channel->create_channel($params);
+      $notification_channel = new NotificationChannel($this->client);
+      $channel = $notification_channel->create_channel($params);
       $options = array('body' => array());
       $options['body']['subscription'] = array();
       $options['body']['subscription']['callbackReference'] = ['notifyURL' => $channel['channel_id']];

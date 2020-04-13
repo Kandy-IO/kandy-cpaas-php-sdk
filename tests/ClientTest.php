@@ -1,24 +1,14 @@
 <?php
 
-namespace cpaassdk;
-
-require '../src/Client.php';
-require 'MockCustomClient.php';
+namespace CpaasSdkTest;
 
 use PHPUnit\Framework\TestCase;
-use GuzzleHttp\Client;
-use GuzzleHttp\Handler\MockHandler;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Psr7\Response;
 
-use cpaassdk\MockCustomClient;
-use cpaassdk\Api;
-
+use CpaasSdk\Api;
 
 class ClientTest extends TestCase {
-  
   public $client = null;
-  
+
   public function setUp() {
     $mock = new MockCustomClient();
     $mock_client = $mock->getGuzzleMockClient();
