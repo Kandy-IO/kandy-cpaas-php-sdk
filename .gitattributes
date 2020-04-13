@@ -1,0 +1,13 @@
+# https://git-scm.com/book/en/v2/Customizing-Git-Git-Attributes
+
+# A list of files and folders those will be excluded from archives and the
+# Composer package (for purposes of making it smaller).
+/phpDocumentor.phar export-ignore
+/phpdoc.dist.xml export-ignore
+/developer-notes.md export-ignore
+/examples export-ignore
+/docs export-ignore
+/tutorials export-ignore
+/tests export-ignore
+/phpunit.xml export-ignore
+/.gitignore export-ignore
