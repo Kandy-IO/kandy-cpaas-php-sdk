@@ -1,13 +1,12 @@
 <?php
+
+require_once('../vendor/autoload.php');
+
+use CpaasSdk\Client;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Factory\AppFactory;
 use Slim\Views\PhpRenderer;
-
-require $_SERVER['DOCUMENT_ROOT'].'../../../../src/Client.php';
-use cpaassdk\Client;
-
-require __DIR__ . '/../vendor/autoload.php';
 
 $app = AppFactory::create();
 
@@ -49,13 +48,13 @@ $app->post('/', function (Request $request, Response $response, $args) use($clie
 		'sender_address'=>getenv('SENDER_NUMBER')
 	];
 	$msg_response = $client->conversation->create_message($params);
-	
+
 	if (array_key_exists('exception_id', $msg_response)) {
     $message = $msg_response['message'];
 		$renderer = new PhpRenderer('templates/');
-		
+
 		return $renderer->render($response, 'index.php', ['alert'=> true, 'message' => $message]);
-		
+
 	} elseif (array_key_exists('delivery_info', $msg_response)) {
 		$message = 'Message sent successfully.';
 		$renderer = new PhpRenderer('templates/');
@@ -72,18 +71,18 @@ $app->post('/subscribe', function (Request $request, Response $response, $args) 
 		'webhook_url'=>$webhook_url,
 		'destination_address'=>getenv('SENDER_NUMBER')
 	];
-	$subscribe_response = $client->conversation->subscribe($params);	
+	$subscribe_response = $client->conversation->subscribe($params);
 
 	if (array_key_exists('subscription_id', $subscribe_response)) {
-    $message = 'Created subsciption';
+    $message = 'Created subscription';
 		$renderer = new PhpRenderer('templates/');
-		
+
 		return $renderer->render($response, 'index.php', ['success'=> true, 'message' => $message]);
 
   } elseif (array_key_exists('delivery_info', $msg_response)) {
-    $message = $subscribe_response['message'];		
+    $message = $subscribe_response['message'];
 		$renderer = new PhpRenderer('templates/');
-		
+
 		return $renderer->render($response, 'index.php', ['alert'=> true, 'message' => $message]);
   }
 });
@@ -91,19 +90,21 @@ $app->post('/subscribe', function (Request $request, Response $response, $args) 
 $app->post('/webhook', function (Request $request, Response $response, $args) use($client) {
 	$input = $request->getBody();
 	$json_input = json_decode($input, true);
-	
+
 	$parsed_response = $client->notification->parse($json_input);
 	$fp = fopen('notification.txt', 'a');
 	$data = json_encode($parsed_response).PHP_EOL;
 	fwrite($fp, $data);
 	fclose($fp);
-	$renderer = new PhpRenderer('templates/');
-	
-	return $renderer->render($response, 'index.php', ['alert'=> true, 'message' => $json_input]);
+
+	return $response->withStatus(201);
 });
 
 $app->get('/notifications', function (Request $request, Response $response, $args) {
 	$notification_list = array();
+
+	$response = $response->withHeader('Content-Type','application/json');
+
 	if (file_exists('notification.txt')) {
 		$handle = fopen("notification.txt", "r");
 		if ($handle) {
@@ -111,13 +112,11 @@ $app->get('/notifications', function (Request $request, Response $response, $arg
 				array_push($notification_list, $line);
 			}
 		}
-		$response->getBody()->write(json_encode($notification_list));
-		$response = $response->withHeader('Content-Type','application/json');
-		
-		return $response;
-	} else {
-		return $response->withJson([]);
 	}
+
+	$response->getBody()->write(json_encode($notification_list));
+
+	return $response;
 });
 
 $app->run();

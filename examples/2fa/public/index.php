@@ -1,13 +1,12 @@
 <?php
+
+require_once('../vendor/autoload.php');
+
+use CpaasSdk\Client;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Factory\AppFactory;
 use Slim\Views\PhpRenderer;
-
-require $_SERVER['DOCUMENT_ROOT'].'../../../../src/Client.php';
-use cpaassdk\Client;
-
-require __DIR__ . '/../vendor/autoload.php';
 
 $app = AppFactory::create();
 
@@ -74,13 +73,13 @@ $app->post('/login', function (Request $request, Response $response, $args) {
 
 $app->get('/verify', function (Request $request, Response $response, $args) {
 	$session = new \SlimSession\Helper;
-	
+
 	if (!$session->cred_verified) {
 		return $response->withStatus(302)->withHeader('Location', '/login');
 	}
 
 	$renderer = new PhpRenderer('templates/');
-	return $renderer->render($response, 'verify.php'); 
+	return $renderer->render($response, 'verify.php');
 });
 
 $app->post('/verify', function (Request $request, Response $response, $args) use($client) {
@@ -94,21 +93,21 @@ $app->post('/verify', function (Request $request, Response $response, $args) use
     'verification_code'=>$code
 	];
 	$res = $client->twofactor->verify_code($params);
-	
+
 	if ($res['verified']) {
 		$session->logged_in = true;
 		return $response->withStatus(302)->withHeader('Location', '/dashboard');
   } else {
 		$renderer = new PhpRenderer('templates/');
 		return $renderer->render($response, 'verify.php', ['alert' => $res['message']]);
-  } 
+  }
 });
 
 $app->post('/sendcode', function (Request $request, Response $response, $args) use($client) {
 	$session = new \SlimSession\Helper;
 	$_input = $request->getParsedBody();
 	$tfa_method = $_input['tfa'];
-	
+
 	if ($tfa_method == 'email' && null == getenv('DESTINATION_EMAIL')) {
 		$renderer = new PhpRenderer('templates/');
 
@@ -140,14 +139,14 @@ $app->post('/sendcode', function (Request $request, Response $response, $args) u
 		$code_id = $client->twofactor->send_code($params);
 		$session->codeid = $code_id['code_id'];
 		$renderer = new PhpRenderer('templates/');
-		
+
 		return $renderer->render($response, 'verify.php', ['success_msg' =>'verification code sent successfully.']);
 	}
 });
 
 $app->get('/dashboard', function (Request $request, Response $response, $args) {
 	$session = new \SlimSession\Helper;
-	
+
 	if (!$session->logged_in) {
 		return $response->withStatus(302)->withHeader('Location', '/login');
 	}
@@ -159,8 +158,8 @@ $app->get('/dashboard', function (Request $request, Response $response, $args) {
 $app->post('/logout', function (Request $request, Response $response, $args) {
 	$session = new \SlimSession\Helper;
 	$session->logged_in = false;
-	
-	return $response->withStatus(302)->withHeader('Location', '/login');	  
+
+	return $response->withStatus(302)->withHeader('Location', '/login');
 });
 
 $app->run();
