@@ -1,18 +1,10 @@
 <?php
 
-namespace cpaassdk;
+namespace CpaasSdk;
 
-require '../vendor/autoload.php';
-
-require 'Api.php';
-require 'Resources/Twofactor.php';
-require 'Resources/Conversation.php';
-require 'Resources/Notification.php';
-
-use cpaassdk\Twofactor;
-use cpaassdk\Conversation;
-use cpaassdk\Api;
-use cpaassdk\Notification;
+use CpaasSdk\Resources\Twofactor;
+use CpaasSdk\Resources\Conversation;
+use CpaasSdk\Resources\Notification;
 
 class Client {
 

@@ -1,9 +1,8 @@
 <?php
 
-namespace cpaassdk;
+namespace CpaasSdk\Resources;
 
-
-use cpaassdk\Api;
+use CpaasSdk\Api;
 
 /**
 * CPaaS provides Authentication API where a two-factor authentication (2FA) flow can be implemented by using that.

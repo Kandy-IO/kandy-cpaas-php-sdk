@@ -1,16 +1,11 @@
 <?php
 
-namespace cpaassdk;
-
-require '../vendor/autoload.php';
-require 'Helper.php';
+namespace CpaasSdk;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Request;
 use \Datetime;
-
-use cpaassdk\Helper;
 
 class Api extends Helper {
 
@@ -41,7 +36,7 @@ class Api extends Helper {
   }
 
   public function _request($verb, $url, $params=null, $with_token=true) {
-    
+
     $headers = (array_key_exists('headers', $params)) ? $params['headers'] : null;
     $request_headers = $this->compose_headers($headers, $with_token);
 
@@ -49,7 +44,7 @@ class Api extends Helper {
     $request_options = array();
     $request_options['http_errors'] = false;
     $request_options['headers'] = $request_headers;
-    
+
     if(array_key_exists('query', $params)) {
       $request_options['query'] = $params['query'];
     }
@@ -97,14 +92,14 @@ class Api extends Helper {
     $options['body']['client_id'] = $this->client_id;
     $options['body']['client_secret'] = $this->client_secret;
     $options['body']['scope'] = 'openid';
-    
+
     $options['headers']['Content-Type'] = 'application/x-www-form-urlencoded';
 
     $uri = "/cpaas/auth/v1/token";
     $url = $this->_root.$uri;
     $response = $this->_request("POST", $url, $options, false);
     $tokens = $response->getBody();
-    
+
     return $tokens;
   }
 
@@ -138,14 +133,14 @@ class Api extends Helper {
 
     if ($headers) {
       foreach($headers as $k => $v) {
-        $base_header[$k] = $v; 
+        $base_header[$k] = $v;
       }
     }
-    
+
     if ($with_token) {
       $base_header['Authorization'] =  'Bearer '.$this->auth_token();
     }
-    
+
     return $base_header;
   }
 
@@ -157,7 +152,7 @@ class Api extends Helper {
 
     $min_buffer = $this->access_token_parsed['exp'] - $this->access_token_parsed['iat'];
     $expires_in = $this->access_token_parsed['exp'] - intval($date->getTimestamp()) - $min_buffer;
-    
+
     return $expires_in < 0;
   }
 }

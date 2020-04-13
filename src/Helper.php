@@ -1,6 +1,6 @@
 <?php
 
-namespace cpaassdk;
+namespace CpaasSdk;
 
 class Helper {
 
