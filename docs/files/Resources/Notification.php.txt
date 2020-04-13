@@ -1,9 +1,8 @@
 <?php
 
-namespace cpaassdk;
+namespace CpaasSdk\Resources;
 
-
-use cpaassdk\Api;
+use CpaasSdk\Api;
 
 /**
   * CPaaS notification helper methods.

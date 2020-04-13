@@ -9,12 +9,14 @@ To begin, you will need to make sure composer is installed and setup for your pr
 and then execute the below command in your projects root directory.
 
 ```php
-composer require cpaassdk/cpaassdk
+composer require cpaas/cpaassdk
 ```
 
-In your application, you need to import cpaassdk `use cpaassdk/Client;`
+In your application, you need to import cpaassdk `use CpaasSdk\Client;`
 
 ```php
+use CpaasSdk\Client;
+
 # Call the configure method with the required credentials.
 $client = new Client(args);
 ```

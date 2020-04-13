@@ -5,7 +5,7 @@
 Install the package with:
 
 ```bash
-composer require cpaassdk/cpaassdk
+composer require cpaas/cpaassdk
 ```
 
 ## Reference

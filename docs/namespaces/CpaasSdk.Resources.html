@@ -21,55 +21,7 @@
     <script src="../js/jquery.smooth-scroll.js"></script>
     <script src="../js/prism.min.js"></script>
     <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
-        <script type="text/javascript">
-        function loadExternalCodeSnippets() {
-            Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
-                var src = pre.getAttribute('data-src');
-                var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
-                var language = 'php';
-
-                var code = document.createElement('code');
-                code.className = 'language-' + language;
-
-                pre.textContent = '';
-
-                code.textContent = 'Loading…';
-
-                pre.appendChild(code);
-
-                var xhr = new XMLHttpRequest();
-
-                xhr.open('GET', src, true);
-
-                xhr.onreadystatechange = function () {
-                    if (xhr.readyState == 4) {
-
-                        if (xhr.status < 400 && xhr.responseText) {
-                            code.textContent = xhr.responseText;
-
-                            Prism.highlightElement(code);
-                        }
-                        else if (xhr.status >= 400) {
-                            code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
-                        }
-                        else {
-                            code.textContent = '✖ Error: File does not exist or is empty';
-                        }
-                    }
-                };
-
-                xhr.send(null);
-            });
-        }
-
-        $(document).ready(function(){
-            loadExternalCodeSnippets();
-        });
-        $('#source-view').on('shown', function () {
-            loadExternalCodeSnippets();
-        })
-    </script>
-
+    
     <link rel="shortcut icon" href="../images/favicon.ico"/>
     <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
     <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png"/>
@@ -144,28 +96,28 @@
                                 <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-651283526"></a>
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1674632822"></a>
                                 <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
             </div>
-            <div id="namespace-651283526" class="accordion-body collapse in">
+            <div id="namespace-1674632822" class="accordion-body collapse in">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1725123980"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1218515389"></a>
                                 <a href="../namespaces/CpaasSdk.html" style="margin-left: 30px; padding-left: 0">CpaasSdk</a>
             </div>
-            <div id="namespace-1725123980" class="accordion-body collapse ">
+            <div id="namespace-1218515389" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-735093814"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-837302794"></a>
                                 <a href="../namespaces/CpaasSdk.Resources.html" style="margin-left: 30px; padding-left: 0">Resources</a>
             </div>
-            <div id="namespace-735093814" class="accordion-body collapse ">
+            <div id="namespace-837302794" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -201,19 +153,25 @@
     <section class="row-fluid">
         <div class="span10 offset2">
             <div class="row-fluid">
-                <div class="span8 content file">
+                <div class="span8 content namespace">
                     <nav>
-                                                                    </nav>
+                                                <a href="../namespaces/CpaasSdk.html">\CpaasSdk</a>
+                                            </nav>
+                    <h1><small>\CpaasSdk</small>Resources</h1>
 
-                    <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
-                    <h1><small>Resources</small>Twofactor.php</h1>
-                    <p><em></em></p>
                     
-
                     
                     
                                         <h2>Classes</h2>
                     <table class="table table-hover">
+                                            <tr>
+                            <td><a href="../classes/CpaasSdk.Resources.Conversation.html">Conversation</a></td>
+                            <td><em>CPaaS conversation.</em></td>
+                        </tr>
+                                            <tr>
+                            <td><a href="../classes/CpaasSdk.Resources.Notification.html">Notification</a></td>
+                            <td><em>CPaaS notification helper methods.</em></td>
+                        </tr>
                                             <tr>
                             <td><a href="../classes/CpaasSdk.Resources.Twofactor.html">Twofactor</a></td>
                             <td><em>CPaaS provides Authentication API where a two-factor authentication (2FA) flow can be implemented by using that.</em></td>
@@ -223,16 +181,15 @@
 
                 <aside class="span4 detailsbar">
                     <dl>
-                                                    <dt>Package</dt>
-                            <dd><div class="namespace-wrapper">\Default</div></dd>
-                        
-                        
+                        <dt>Namespace hierarchy</dt>
+                        <dd class="hierarchy">
+                                                                                                                                                                                                                                                                                                                                                                                                            
+                                    <div class="namespace-wrapper"><a href="../namespaces/default.html">\</a></div>
+                                                            
+                                    <div class="namespace-wrapper"><a href="../namespaces/CpaasSdk.html">\CpaasSdk</a></div>
+                                                                                        <div class="namespace-wrapper">\CpaasSdk\Resources</div>
+                        </dd>
                     </dl>
-                    <h2>Tags</h2>
-                    <table class="table table-condensed">
-                                                    <tr><td colspan="2"><em>None found</em></td></tr>
-                                            </table>
-
                 </aside>
             </div>
 
@@ -240,16 +197,6 @@
             
         </div>
     </section>
-
-    <div id="source-view" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="source-view-label" aria-hidden="true">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h3 id="source-view-label"></h3>
-        </div>
-        <div class="modal-body">
-            <pre data-src="../files/Resources/Twofactor.php.txt" class="language-php line-numbers"></pre>
-        </div>
-    </div>
 
     <footer class="row-fluid">
         <section class="span10 offset2">

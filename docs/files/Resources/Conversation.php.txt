@@ -1,11 +1,9 @@
 <?php
 
-namespace cpaassdk;
+namespace CpaasSdk\Resources;
 
-require 'NotificationChannel.php';
-
-use cpaassdk\Api;
-use cpaassdk\NotificationChannel;
+use CpaasSdk\Api;
+use CpaasSdk\Resources\NotificationChannel;
 
 /**
   * CPaaS conversation.
@@ -22,13 +20,13 @@ class Conversation {
   /**
    * @ignore
    */
-  public $notificaton_channel = null;
+  public $notification_channel = null;
 
   /**
    * @ignore
    */
 
-  public $msg_type = ['SMS' => 'sms'];
+  public $types = ['SMS' => 'sms'];
 
   /**
    * @ignore
@@ -45,7 +43,7 @@ class Conversation {
    * <pre>
    * <ul>
    *
-   * <li><b><samp>$params['type']</samp></b>                <samp>string</samp>   <p>Type of conversation.Possible value(s) - sms. Check conversation.types for more options.</p></li>
+   * <li><b><samp>$params['type']</samp></b>                <samp>string</samp>   <p>Type of conversation.Possible value(s) - sms. Check conversation->types for more options.</p></li>
    * <li><b><samp>$params['sender_address']</samp></b>      <samp>string</samp>   <p>Sender address information, basically the from address. E164 formatted DID number passed as a value, which is owned by the user. If the user wants to let CPaaS uses the default assigned DID number, then this field should have "default" as it's value.</p></li>
    * <li><b><samp>$params['destination_address']</samp></b> <samp>string</samp>   <p>Indicates which DID number(s) used as destination for this SMS.</p>
    * <li><b><samp>$params['message']</samp></b>             <samp>string</samp>   <p>SMS text message.</p>
@@ -62,7 +60,7 @@ class Conversation {
     $message = $params['message'];
     $sender_address = $params['sender_address'];
 
-    if ($message_type == $this->msg_type['SMS']) {
+    if ($message_type == $this->types['SMS']) {
       $options = array('body'=> array());
       $options['body']['outboundSMSMessageRequest'] = array();
       $options['body']['outboundSMSMessageRequest']['address'] = $destination_address;
@@ -102,7 +100,7 @@ class Conversation {
    * @param array $params Single parameter to hold all options.
    * <pre>
    * <ul>
-   * <li><b><samp>$params['type']</samp></b>                   <samp>string</samp> <p>Type of conversation. Possible value(s) - sms. Check conversation.types for more options.</p></li>
+   * <li><b><samp>$params['type']</samp></b>                   <samp>string</samp> <p>Type of conversation. Possible value(s) - sms. Check conversation->types for more options.</p></li>
    * <li><b><samp>$params['remote_address']</samp></b>         <samp>string</samp> <i>optional</i> <p>Remote address information, information while retrieving the SMS history, basically the destination telephone number that user exchanged SMS before. E164 formatted DID number passed as a value.</p></li>
    * <li><b><samp>$params['local_address]</samp></b>           <samp>string</samp> <i>optional</i> <p>Local address information while retrieving the SMS history, basically the source telephone number that user exchanged SMS before.</p></li>
    * <li><b><samp>$params['query']</samp></b>                  <samp>array</samp>  <i>optional</i> <p>To hold all query related parameter.</p></li>
@@ -125,7 +123,7 @@ class Conversation {
     $local_address = $params['local_address'];
     $query = $params['query'];
 
-    if ($message_type == $this->msg_type['SMS']) {
+    if ($message_type == $this->types['SMS']) {
       $options = ['query' => $query];
       $uri = 'remoteAddresses';
       if ($remote_address) {
@@ -158,7 +156,7 @@ class Conversation {
    * @param array $params Single parameter to hold all options.
    * <pre>
    * <ul>
-   * <li><b><samp>$params['type']</samp></b>           <samp>string</samp>   <p>Type of conversation. Possible value(s) -  sms. Check conversation.types for more options.</p></li>
+   * <li><b><samp>$params['type']</samp></b>           <samp>string</samp>   <p>Type of conversation. Possible value(s) -  sms. Check conversation->types for more options.</p></li>
    * <li><b><samp>$params['remote_address']</samp></b> <samp>string</samp>   <p>Remote address information, information while retrieving the SMS history, basically the destination telephone number that user exchanged SMS before. E164 formatted DID number passed as a value.</p></li>
    * <li><b><samp>$params['local_address']</samp></b>  <samp>string</samp>   <p>Local address information while retrieving the SMS history, basically the source telephone number that user exchanged SMS before.</p></li>
    * <li><b><samp>$params['message_id']</samp></b>     <samp>string</samp>   <p>Identification of the SMS message.</p></li>
@@ -172,7 +170,7 @@ class Conversation {
     $local_address = $params['local_address'];
     $message_id = $params['message_id'];
 
-    if ($message_type == $this->msg_type['SMS']) {
+    if ($message_type == $this->types['SMS']) {
       $uri = '/remoteAddresses/'.$remote_address.'/localAddresses/'.$local_address.'/messages/'.$message_id.'/status';
       $uri = "/cpaas/smsmessaging/v1/".$this->client->user_id.$uri;
       $url = $this->client->_root.$uri;
@@ -198,7 +196,7 @@ class Conversation {
    * @param array $params Single parameter to hold all options.
    * <pre>
    * <ul>
-   * <li><b><samp>$params['type']</samp></b>                        <samp>string</samp> <p>Type of conversation. Possible value(s) - sms. Check conversation.types for more options.</p></li>
+   * <li><b><samp>$params['type']</samp></b>                        <samp>string</samp> <p>Type of conversation. Possible value(s) - sms. Check conversation->types for more options.</p></li>
    * <li><b><samp>$params['remote_address']</samp></b>              <samp>string</samp> <p>Remote address information, information while retrieving the SMS history, basically the destination telephone number that user exchanged SMS before. E164 formatted DID number passed as a value.</p></li>
    * <li><b><samp>$params['local_address']</samp></b>               <samp>string</samp> <p>Local address information while retrieving the SMS history, basically the source telephone number that user exchanged SMS before.</p></li>
    * <li><b><samp>$params['query']</samp></b>                       <samp>array</samp>  <i>optional</i><p>To hold all query related parameter.</p></li>
@@ -215,7 +213,7 @@ class Conversation {
     $local_address = $params['local_address'];
     $query = $params['query'];
 
-    if ($message_type == $this->msg_type['SMS']) {
+    if ($message_type == $this->types['SMS']) {
       $options = ['query' => $query];
       $uri = '/remoteAddresses/'.$remote_address.'/localAddresses/'.$local_address.'/messages';
       $uri = "/cpaas/smsmessaging/v1/".$this->client->user_id.$uri;
@@ -242,7 +240,7 @@ class Conversation {
    * @param array $params Single parameter to hold all options.
    * <pre>
    * <ul>
-   * <li><b><samp>$params['type']</samp></b>           <samp>string</samp>   <p>Type of conversation. Possible value(s) -  sms. Check conversation.types for more options.</p></li>
+   * <li><b><samp>$params['type']</samp></b>           <samp>string</samp>   <p>Type of conversation. Possible value(s) -  sms. Check conversation->types for more options.</p></li>
    * <li><b><samp>$params['remote_address']</samp></b> <samp>string</samp>   <p>Remote address information, information while retrieving the SMS history, basically the destination telephone number that user exchanged SMS before. E164 formatted DID number passed as a value.</p></li>
    * <li><b><samp>$params['local_address']</samp></b>  <samp>string</samp>   <p>Local address information while retrieving the SMS history, basically the source telephone number that user exchanged SMS before.</p></li>
    * <li><b><samp>$params['message_id']</samp></b>     <samp>string</samp>   <p>Identification of the SMS message.</p></li>
@@ -256,7 +254,7 @@ class Conversation {
     $local_address = $params['local_address'];
     $message_id = $params['message_id'];
 
-    if ($message_type == $this->msg_type['SMS']) {
+    if ($message_type == $this->types['SMS']) {
       $uri = '/remoteAddresses/'.$remote_address.'/localAddresses/'.$local_address.'/messages/'.$message_id;
       $uri = "/cpaas/smsmessaging/v1/".$this->client->user_id.$uri;
       $url = $this->client->_root.$uri;
@@ -282,7 +280,7 @@ class Conversation {
    * @param array $params Single parameter to hold all options.
    * <pre>
    * <ul>
-   * <li><b><samp>$params['type']</samp></b>           <samp>string</samp>   <p>Type of conversation. Possible value(s) - sms. Check conversation.types for more options.</p></li>
+   * <li><b><samp>$params['type']</samp></b>           <samp>string</samp>   <p>Type of conversation. Possible value(s) - sms. Check conversation->types for more options.</p></li>
    * </ul>
    * </pre>
    */
@@ -290,7 +288,7 @@ class Conversation {
   public function get_subscriptions($params=null) {
     $message_type = $params['type'];
 
-    if ($message_type == $this->msg_type['SMS']) {
+    if ($message_type == $this->types['SMS']) {
       $uri = "/cpaas/smsmessaging/v1/".$this->client->user_id."/inbound/subscriptions";
       $url = $this->client->_root.$uri;
       $response = $this->client->_request('GET', $url);
@@ -329,7 +327,7 @@ class Conversation {
    * @param array $params Single parameter to hold all options.
    * <pre>
    * <ul>
-   * <li><b><samp>$params['type']</samp></b>             <samp>string</samp>   <p>Type of conversation. Possible value(s) -  sms. Check conversation.types for more options.</p></li>
+   * <li><b><samp>$params['type']</samp></b>             <samp>string</samp>   <p>Type of conversation. Possible value(s) -  sms. Check conversation->types for more options.</p></li>
    * <li><b><samp>$params['subscription_id']</samp></b>  <samp>string</samp>   <p>Resource ID of the subscription.</p></li>
    * </ul>
    * </pre>
@@ -339,7 +337,7 @@ class Conversation {
     $message_type = $params['type'];
     $subscription_id = $params['subscription_id'];
 
-    if ($message_type == $this->msg_type['SMS']) {
+    if ($message_type == $this->types['SMS']) {
       $uri = $subscription_id;
       $uri = "/cpaas/smsmessaging/v1/".$this->client->user_id."/inbound/subscriptions/".$uri;
       $url = $this->client->_root.$uri;
@@ -377,7 +375,7 @@ class Conversation {
    * @param array $params Single parameter to hold all options.
    * <pre>
    * <ul>
-   * <li><b><samp>$params['type']</samp></b>                 <samp>string</samp>   <p>Type of conversation. Possible value(s) -  sms. Check conversation.types for more options.</p></li>
+   * <li><b><samp>$params['type']</samp></b>                 <samp>string</samp>   <p>Type of conversation. Possible value(s) -  sms. Check conversation->types for more options.</p></li>
    * <li><b><samp>$params['webhook_url']</samp></b>          <samp>string</samp>   <p>HTTPS URL that is present in your application server which is accessible from the public web where the notifications should be sent to. Note: Should be a <code>POST</code> endpoint.</p></li>
    * <li><b><samp>$params['destination_address']</samp></b>  <samp>string</samp>   <i>optional</i> <p>The address that incoming messages are received for this subscription. If does not exist, CPaaS uses the default assigned DID number to subscribe against. It is suggested to provide the intended E164 formatted DID number within this parameter.</p></li>
    * </ul>
@@ -388,10 +386,10 @@ class Conversation {
     $message_type = $params['type'];
     $destination_address = $params['destination_address'];
 
-    if ($message_type == $this->msg_type['SMS']) {
+    if ($message_type == $this->types['SMS']) {
       # create a notifyURL with webhookURL
-      $notificaton_channel = new NotificationChannel($this->client);
-      $channel = $notificaton_channel->create_channel($params);
+      $notification_channel = new NotificationChannel($this->client);
+      $channel = $notification_channel->create_channel($params);
       $options = array('body' => array());
       $options['body']['subscription'] = array();
       $options['body']['subscription']['callbackReference'] = ['notifyURL' => $channel['channel_id']];
@@ -429,7 +427,7 @@ class Conversation {
    * @param array $params Single parameter to hold all options.
    * <pre>
    * <ul>
-   * <li><b><samp>$params['type']</samp></b>             <samp>string</samp>   <p>Type of conversation. Possible value(s) -  sms. Check conversation.types for more options.</p></li>
+   * <li><b><samp>$params['type']</samp></b>             <samp>string</samp>   <p>Type of conversation. Possible value(s) -  sms. Check conversation->types for more options.</p></li>
    * <li><b><samp>$params['subscription_id']</samp></b>  <samp>string</samp>   <p>Resource ID of the subscription.</p></li>
    * </ul>
    * </pre>
@@ -439,7 +437,7 @@ class Conversation {
     $message_type = $params['type'];
     $subscription_id = $params['subscription_id'];
 
-    if ($message_type == $this->msg_type['SMS']) {
+    if ($message_type == $this->types['SMS']) {
       $uri = "/cpaas/smsmessaging/v1/".$this->client->user_id."/inbound/subscriptions/".$subscription_id;
       $url = $this->client->_root.$uri;
       $response = $this->client->_request('DELETE', $url);
