@@ -24,21 +24,39 @@ $client = new Client(args);
 After you've configured the SDK client, you can begin playing around with it to learn its functionality and see how it fits in your application. The API reference documentation will help to explain the details of the available features.
 
 ## Configuration
+Before starting, you need to learn following information from your CPaaS account, specifically from Developer Portal.
 
-```php
-$client = new Client(
-  '<private project key>',
-  '<private project secret>',
-  'https://$KANDYFQDN$'
-);
-```
+If you want to authenticate using CPaaS account's credentials, the configuration information required should be under:
 
-The information required to be authenticated should be under:
++ `Home` -> `Personal Profile` (top right corner) -> `Details`
+> + `Email` should be mapped to `email`
+> + Your account password should be mapped to `password`
+> + `Account client ID` should be mapped to `client_id`
+
+Alternatively if you want to use your project's credentials, the configuration information required should be under:
 
 + `Projects` -> `{your project}` -> `Project info`/`Project secret`
-
 > + `Private Project key` should be mapped to `client_id`
 > + `Private Project secret` should be mapped to `client_secret`
+
+Create a client instance by passing the configuration object to the modules client object as shown below.
+
+```php
+$client = new Client([
+  'client_id' => '<private project key>',
+  'client_secret' => '<private project secret>',
+  'base_url' => 'https://$KANDYFQDN$'
+]);
+
+// or
+
+$client = new Client([
+  'client_id' => '<private project key>',
+  'email' => '<account email>'
+  'password' => '<account password>'
+  'base_url' => 'https://$KANDYFQDN$'
+]);
+```
 
 ## Usage
 

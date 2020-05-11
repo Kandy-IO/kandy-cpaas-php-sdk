@@ -12,7 +12,13 @@ class ClientTest extends TestCase {
   public function setUp() {
     $mock = new MockCustomClient();
     $mock_client = $mock->getGuzzleMockClient();
-    $this->client = new Api($client_id, $client_secret, $base_url, $mock_client);
+    $config = [
+      'client_id' => 'test-client-id',
+      'client_secret' => 'test-client-secret',
+      'base_url' => 'https://test-base.com'
+    ];
+
+    $this->client = new Api($config, $mock_client);
   }
 
   public function testClientCredentials() {

@@ -64,7 +64,7 @@ class Conversation {
       $options = array('body'=> array());
       $options['body']['outboundSMSMessageRequest'] = array();
       $options['body']['outboundSMSMessageRequest']['address'] = $destination_address;
-      $options['body']['outboundSMSMessageRequest']['clientCorrelator'] = $this->client->client_correlator;
+      $options['body']['outboundSMSMessageRequest']['clientCorrelator'] = $this->client->config->client_correlator;
       $options['body']['outboundSMSMessageRequest']['outboundSMSTextMessage'] =  array();
       $options['body']['outboundSMSMessageRequest']['outboundSMSTextMessage']['message'] = $message;
 
@@ -393,7 +393,7 @@ class Conversation {
       $options = array('body' => array());
       $options['body']['subscription'] = array();
       $options['body']['subscription']['callbackReference'] = ['notifyURL' => $channel['channel_id']];
-      $options['body']['subscription']['clientCorrelator'] = $this->client->client_correlator;
+      $options['body']['subscription']['clientCorrelator'] = $this->client->config->client_correlator;
       $options['body']['subscription']['destinationAddress'] = $destination_address;
 
       $uri = "/cpaas/smsmessaging/v1/".$this->client->user_id."/inbound/subscriptions";

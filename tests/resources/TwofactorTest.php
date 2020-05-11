@@ -15,12 +15,15 @@ class TwofactorTest extends TestCase {
 
 
   public function setup() {
-    $client_id = "test-client-id";
-    $client_secret = "test-client-secret";
-    $base_url = 'https://test-server.com';
+    $config = [
+      'client_id' => 'test-client-id',
+      'client_secret' => 'test-client-secret',
+      'base_url' => 'https://test-base.com'
+    ];
+
     $mock = new MockCustomClient();
     $mock_client = $mock->getGuzzleMockClient();
-    $this->client = new Api($client_id, $client_secret, $base_url, $mock_client);
+    $this->client = new Api($config, $mock_client);
     $this->twofactor = new Twofactor($this->client);
   }
 

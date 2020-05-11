@@ -11,5 +11,6 @@
     <ignore>src/Resources/NotificationChannel.php</ignore>
     <ignore>src/Helper.php</ignore>
     <ignore>src/Api.php</ignore>
+    <ignore>src/Config.php</ignore>
   </files>
 </phpdoc>

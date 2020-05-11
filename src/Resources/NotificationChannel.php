@@ -49,7 +49,7 @@ class NotificationChannel {
     $options = array('body' => array());
     $options['body']['notificationChannel']['channelData'] = array('x-webhookURL' => $webhook_url);
     $options['body']['notificationChannel']['channelType'] = 'webhooks';
-    $options['body']['notificationChannel']['clientCorrelator'] = $this->client->client_correlator;
+    $options['body']['notificationChannel']['clientCorrelator'] = $this->client->config->client_correlator;
 
     $uri = '/cpaas/notificationchannel/v1/'.$this->client->user_id."/channels";
     $url = $this->client->_root.$uri;

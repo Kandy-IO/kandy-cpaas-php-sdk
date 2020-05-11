@@ -12,26 +12,24 @@ class Api extends Helper {
   public $_root = null;
   public $_version = '1.0.0';
   // api config section.
-  public $client_id = null;
-  public $client_secret = null;
+  public $config = null;
   public $user_id = null;
   public $access_token = null;
   public $id_token = null;
   public $access_token_parsed = null;
   public $id_token_parsed = true;
-  public $client_correlator = null;
   public $client = null;
 
-  public function __construct($client_id, $client_secret, $base_url, $mock_http_client=null) {
-    $this->_root = $base_url;
-		$this->client_id = $client_id;
-    $this->client_secret = $client_secret;
-    $this->client_correlator = $client_id.'-php';
+  public function __construct($config, $mock_http_client=null) {
+    $this->config = $config;
+    $this->_root = $config->base_url;
+
     if (!$mock_http_client) {
       $this->http_client = new Client();
     } else {
       $this->http_client = $mock_http_client;
     }
+
     $this->auth_token();
   }
 
@@ -87,10 +85,18 @@ class Api extends Helper {
 
   public function tokens() {
     $options = array('body'=> array(), 'headers'=> array());
-    $options['body']['grant_type'] = 'client_credentials';
-    $options['body']['client_id'] = $this->client_id;
-    $options['body']['client_secret'] = $this->client_secret;
+
+    $options['body']['client_id'] = $this->config->client_id;
     $options['body']['scope'] = 'openid';
+
+    if (!$this->config->client_secret) {
+      $options['body']['grant_type'] = 'password';
+      $options['body']['username'] = $this->config->email;
+      $options['body']['password'] = $this->config->password;
+    } else {
+      $options['body']['grant_type'] = 'client_credentials';
+      $options['body']['client_secret'] = $this->config->client_secret;
+    }
 
     $options['headers']['Content-Type'] = 'application/x-www-form-urlencoded';
 
