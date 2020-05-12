@@ -21,7 +21,11 @@ $app->add(new \Slim\Middleware\Session([
 ]));
 
 $container = new \DI\Container;
-$client = new Client(getenv('CLIENT_ID'), getenv('CLIENT_SECRET'), getenv('BASE_URL'));
+$client = new Client([
+	'client_id' => getenv('CLIENT_ID'),
+	'client_secret' => getenv('CLIENT_SECRET'),
+	'base_url' => getenv('BASE_URL')
+]);
 
 // Register globally to app
 $container->set('session', function () {
