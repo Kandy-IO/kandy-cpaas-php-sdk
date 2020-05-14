@@ -26,7 +26,7 @@ class Client {
   public $client = null;
 
   /**
-   * Configure the SDK with client_id, client_secret and base_url.
+   * Configure the SDK with client_id, client_secret or email/password.
    *
    * <pre>
    * <code>
@@ -48,11 +48,16 @@ class Client {
    * </code>
    * </pre>
    *
-   * @param string $config['client_id'] Private project key / Account client ID. If Private project key is used then client_secret is mandatory. If account client ID is used then email and password are mandatory.
-   * @param string $config['base_url'] URL of the server to be used.
-   * @param string $config['client_secret'] <i>optional</i> Private project secret.
-   * @param string $config['email'] <i>optional</i> Account login email.
-   * @param string $config['password'] <i>optional</i> Account login password.
+   * @param array $config Configuration.
+   * <pre>
+   * <ul>
+   * <li><b><samp>$config['client_id']</samp></b> <samp>string</samp> <p>Private project key / Account client ID. If Private project key is used then client_secret is mandatory. If account client ID is used then email and password are mandatory.</p></li>
+   * <li><b><samp>$config['base_url']</samp></b> <samp>string</samp> <p>URL of the server to be used.</p></li>
+   * <li><b><samp>$config['client_secret']</samp></b> <samp>string</samp> <i>optional</i> <p>Private project secret.</p>
+   * <li><b><samp>$config['email']</samp></b> <samp>string</samp>  <i>optional</i> <p>Account login email.</p>
+   * <li><b><samp>$config['email']</samp></b> <samp>string</samp>  <i>optional</i> <p>Account login password.</p>
+   * </ul>
+   * </pre>
    */
 
   public function __construct($config) {
