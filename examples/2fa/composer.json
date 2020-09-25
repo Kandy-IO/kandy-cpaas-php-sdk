@@ -10,6 +10,6 @@
     "slim/slim": "^4.1",
     "slim/twig-view": "^3.0",
     "vlucas/phpdotenv": "^4.1",
-    "cpaas/cpaassdk": "^1.1"
+    "cpaas/cpaassdk": "^1.1.1"
   }
 }
