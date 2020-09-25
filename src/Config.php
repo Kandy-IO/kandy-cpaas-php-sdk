@@ -26,9 +26,9 @@ class Config {
 
     $this->client_id = $config['client_id'];
     $this->base_url = $config['base_url'];
-    $this->client_secret = $config['client_secret'];
-    $this->email = $config['email'];
-    $this->password = $config['password'];
+    $this->client_secret = isset($config['client_secret']) ? $config['client_secret'] : '';
+    $this->email = isset($config['email']) ? $config['email'] : '';
+    $this->password = isset($config['password']) ? $config['password'] : '';
     $this->client_correlator = $config['client_id'].'-php';
   }
 }
