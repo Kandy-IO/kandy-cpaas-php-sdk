@@ -10,7 +10,7 @@ use \Datetime;
 class Api extends Helper {
 
   public $_root = null;
-  public $_version = '1.1.1';
+  public $_version = '1.1.2';
   // api config section.
   public $config = null;
   public $user_id = null;
