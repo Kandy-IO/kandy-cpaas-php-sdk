@@ -51,15 +51,19 @@ class Twofactor {
     }
 
     $message = $params['message'];
-    $subject = $params['subject'];
     $method = array_key_exists('method', $params) ? $params['method'] : 'sms';
     $type = array_key_exists('type', $params) ? $params['type'] : 'numeric';
-
     $options = array('body'=> array(), 'headers'=> array());
+
     $options['body']['code'] = array();
     $options['body']['code']['address'] = $destination_address;
     $options['body']['code']['method'] = $method;
-    $options['body']['code']['subject'] = $subject;
+
+    if ($method == 'email') {
+      $subject = $params['subject'];
+      $options['body']['code']['subject'] = $subject;
+    }
+
     $options['body']['code']['format'] = array('length'=> $length, 'type'=> $type);
     $options['body']['code']['expiry'] = $expiry;
     $options['body']['code']['message'] = $message;
